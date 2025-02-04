@@ -1,0 +1,23 @@
+[
+    {
+      "nombre": "Conferencia IAPA",
+      "fecha": "2024-09-12",
+      "descripcion": "Conferencia sobre el futuro de las montañas rusas."
+    },
+    {
+      "nombre": "Expo de Parques de Diversiones",
+      "fecha": "2024-10-15",
+      "descripcion": "Exposición de nuevos productos y montañas rusas."
+    },
+    {
+      "nombre": "Feria Internacional de Parques de Diversiones",
+      "fecha": "2024-11-05",
+      "descripcion": "Feria sobre las últimas innovaciones en parques de diversiones y entretenimiento."
+    },
+    {
+      "nombre": "Simposio de Ingeniería en Entretenimiento",
+      "fecha": "2024-12-01",
+      "descripcion": "Simposio donde se presentan nuevos proyectos de ingeniería para parques de diversiones."
+    }
+  ]
+  

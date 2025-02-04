@@ -1,0 +1,189 @@
+*,
+::after,
+::before {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+#error {
+    color: rgb(230, 48, 48);
+}
+
+/*Estilo login y register*/
+
+#loginRegister {
+    width: 100%;
+}
+
+#loginRegister {
+    width: 425px;
+    margin: 200px auto;
+    text-align: center;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0px 0px 1px 5px rgba(35, 22, 112, 0.658);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+h2 {
+    color: rgb(65, 0, 126);
+    margin: 10px auto;
+    
+}
+
+h3 {
+    color: rgb(45, 0, 87);
+    margin: 10px auto;
+    text-align: center;
+}
+
+#loginRegister form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+#loginRegister form input[type="text"],
+#loginRegister form input[type="password"] {
+    height: 30px;
+    width: 250px;
+    border: none;
+    border-bottom: .1rem solid rgba(0, 30, 163, 0.5);
+    padding: 10px;
+    font-size: 15px;
+    background-color: rgba(64, 83, 100, 0);
+}
+
+#loginRegister form input[type="text"]:focus,
+#loginRegister form input[type="password"]:focus {
+    border-bottom: 2px solid rgba(0, 30, 163, 0.5);
+    outline: none;
+}
+
+#loginRegister form input[type="submit"] {
+    background-color: rgb(17, 0, 92);
+    color: white;
+    padding: 10px 15px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#loginRegister p {
+    font-size: 15px;
+}
+
+#loginRegister form select {
+    padding: 10px 0 10px 15px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+#loginRegister form select:focus {
+    outline: none;
+}
+
+#loginRegister a {
+    color: rgba(35, 22, 112);
+}
+
+/*Lista de montañas rusas*/
+
+#listaMontañas {
+    position: sticky;
+    top: 0;
+    padding: 15px;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    box-shadow: 0px 0px 1px 1px black;
+    background-color: whitesmoke;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 10%;
+}
+
+#listaMontañas div {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#listaMontañas h1 {
+    color: rgb(65, 0, 126);
+}
+
+#listaMontañas a{
+    text-decoration: none;
+    color: black;
+}
+
+#tablaMontañas {
+    border-radius: 10px;
+    border-spacing: 0;
+    border: 1px solid rgb(109, 109, 109);
+    margin: 0 auto;
+}
+
+#tablaMontañas td ,
+#tablaMontañas th{
+    padding: 10px 20px;
+    border: 1px solid rgb(214, 214, 214);
+}
+
+
+#tablaMontañas th:first-child {
+    border-radius: 10px 0px 0px 0px;
+}
+
+#tablaMontañas th:last-child {
+    border-radius: 0px 10px 0px 0px;
+}
+
+#tablaMontañas thead tr th{
+    background-color: rgb(95, 95, 95);
+    color: white;
+    
+}
+
+#tablaMontañas tr:last-child td:last-child {
+    border-radius: 0px 0px 10px 0px;
+}
+
+#tablaMontañas tr:last-child td:first-child {
+    border-radius: 0px 0px 0px 10px;
+}
+
+#filtro {
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+#agregar {
+    display: grid;
+    grid-template-columns: 250px 200px;
+    gap: 10px;
+}
+
+#agregar button {
+    width: 170px;
+    padding: 10px ;
+}
