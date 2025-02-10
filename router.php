@@ -4,8 +4,12 @@ session_start();
 
 // Incluir los controladores automaticamente
 spl_autoload_register(function ($clase) {
-    require_once __DIR__ . "/controladores/$clase.php";
+    
+    if (file_exists(__DIR__ . "/controladores/$clase.php")) {
+        require_once __DIR__ . "/controladores/$clase.php";
+    }
     require_once __DIR__ . "/modelos/Usuario.php";
+    require_once __DIR__ . "/$clase.php";
 
     
 });
@@ -29,6 +33,7 @@ switch ($accion) {
         break;
     case 'login':
         // Acción para mostrar el formulario de login
+        (new BDA())->bda_creacion();
         (new UsuarioControlador())->login();
         break;
     case 'logout':
