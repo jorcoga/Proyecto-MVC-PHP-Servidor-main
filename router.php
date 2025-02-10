@@ -4,8 +4,10 @@ session_start();
 
 // Incluir los controladores automaticamente
 spl_autoload_register(function ($clase) {
-    require __DIR__ . "/controladores/$clase.php";
-    require __DIR__ . "/modelos/Usuario.php";
+    require_once __DIR__ . "/controladores/$clase.php";
+    require_once __DIR__ . "/modelos/Usuario.php";
+
+    
 });
 
 // Obtener la acción de la URL, por defecto es 'index'

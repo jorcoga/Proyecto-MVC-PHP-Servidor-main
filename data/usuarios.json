@@ -68,5 +68,18 @@
                 "asistencia": true
             }
         }
+    },
+    "jorge": {
+        "nombreUsuario": "jorge",
+        "contrasena": "$2y$10$asrc7AhggEWFXjAI.enWBuMy3JpvUSbmB8TYxwMQ6.XCFix1Y4JNy",
+        "rol": "administrador",
+        "eventos": {
+            "asdasd": {
+                "nombre": "asdasd",
+                "fecha": "2222-02-11",
+                "descripcion": "asdasdasd",
+                "asistencia": true
+            }
+        }
     }
 }

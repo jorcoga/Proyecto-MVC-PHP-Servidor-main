@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // Comprobar si el usuario tiene el rol de 'fabricante'
 if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'administrador') {
     echo "Acceso denegado. Necesitas ser administrador para acceder a esta página.";
