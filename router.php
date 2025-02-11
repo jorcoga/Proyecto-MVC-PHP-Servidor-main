@@ -8,8 +8,11 @@ spl_autoload_register(function ($clase) {
     if (file_exists(__DIR__ . "/controladores/$clase.php")) {
         require_once __DIR__ . "/controladores/$clase.php";
     }
+    else {
+        require_once __DIR__ . "/$clase.php";
+    }
     require_once __DIR__ . "/modelos/Usuario.php";
-    require_once __DIR__ . "/$clase.php";
+    
 
     
 });
