@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Comprobar si el usuario tiene el rol de 'fabricante'
 if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'fabricante') {
@@ -8,25 +7,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'fabricante') {
 }
 
 // Filtrar las montañas rusas creadas por el fabricante
-$montanasRusasFabricante = array_filter($montanasRusas, function ($montana) {
-    return $montana['fabricante'] === $_SESSION['user']['nombreUsuario'];
-});
-
-// Filtrar las montañas rusas generales por los parámetros recibidos en la URL
-$filtrar = $_GET;  // Parámetros de filtro desde la URL
-$montanasRusasGenerales = array_filter($montanasRusas, function ($montana) use ($filtrar) {
-    foreach ($filtrar as $clave => $valor) {
-        if (isset($montana[$clave])) {
-            if (is_numeric($valor)) {
-                // Si el filtro es numérico (altura, velocidad)
-                if ($montana[$clave] < (int)$valor) {
-                    return false;
-                }
-            }
-        }
-    }
-    return true; // Solo si todos los filtros se cumplen
-});
+$montanasRusasFabricante = (new BDA)->obtenerMontanasPorFabricante($_SESSION['user']['nombreUsuario']);
 ?>
 
 
@@ -95,6 +76,7 @@ $montanasRusasGenerales = array_filter($montanasRusas, function ($montana) use (
         });
     }
     ?>
+    
     <!-- Formulario de filtro para las montañas rusas generales -->
     <h3>Montañas Rusas Generales</h3>
     <form class="filtro" method="GET" action="" id="filtro">
@@ -124,7 +106,7 @@ $montanasRusasGenerales = array_filter($montanasRusas, function ($montana) use (
                     <td><?php echo htmlspecialchars($montana['velocidad']); ?> km/h</td>
                     <td><?php echo htmlspecialchars($montana['altura']); ?> m</td>
                     <td><?php echo htmlspecialchars($montana['tipo']); ?></td>
-                    <td><?php echo htmlspecialchars($montana['fabricante']); ?> m</td>
+                    <td><?php echo htmlspecialchars($montana['fabricante']); ?> </td>
                     <td><?php echo htmlspecialchars($montana['ubicacion']); ?></td>
                     <td><?php echo htmlspecialchars($montana['fecha_inauguracion']); ?></td>
                 </tr>

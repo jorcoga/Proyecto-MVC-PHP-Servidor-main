@@ -12,7 +12,7 @@ class MontanaRusa
      */
     public static function obtenerTodas()
     {
-        return json_decode(file_get_contents(__DIR__ . '/../data/montanas_rusas.json'), true);
+        return (new BDA())->obtenerMontanasRusas();
     }
 
     /**
@@ -27,7 +27,7 @@ class MontanaRusa
         $data = self::obtenerTodas();
 
         // Asignar las montañas rusas a la variable
-        $montanasRusas = $data ?? [];
+        $montanasRusasGenerales = $data ?? [];
 
         // Cargar la vista correspondiente según el rol del usuario
         if ($_SESSION['user']['rol'] == "fabricante") {
@@ -46,14 +46,9 @@ class MontanaRusa
      */
     public static function guardar($nuevaMontaña)
     {
-        // Leer las montañas rusas existentes
-        $data = self::obtenerTodas();
+        (new BDA)->añadirMontañaRusa($nuevaMontaña);
 
-        // Agregar la nueva montaña rusa al arreglo de datos
-        $data[$nuevaMontaña['nombre']] = $nuevaMontaña;
-
-        // Almacenar los datos actualizados
-        self::almacenar($data);
+        
     }
 
     /**
@@ -78,14 +73,8 @@ class MontanaRusa
      */
     public static function eliminar($nombre)
     {
-        // Obtener las montañas rusas existentes
-        $data = self::obtenerTodas();
-
-        // Eliminar la montaña rusa del arreglo
-        unset($data[$nombre]);
-
-        // Almacenar los datos actualizados
-        self::almacenar($data);
+        (new BDA)->eliminarMontanaRusa($nombre);
+        header('Location: index.php?accion=index');
     }
 
     /**

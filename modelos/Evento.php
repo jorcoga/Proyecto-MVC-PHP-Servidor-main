@@ -20,9 +20,18 @@ class Evento
      */
     public static function obtenerTodos()
     {
-        return json_decode(file_get_contents(__DIR__ . '/../data/usuarios.json'), true);
+         return (new BDA())->obtenerEventos();    
     }
 
+    /**
+     * Obtiene los eventos generales disponibles.
+     *
+     * @return array Lista de eventos generales.
+     */
+    public static function obtenerEventosPersonales()
+    {
+        return (new BDA())->obtenerEventosPersonales();
+    }
     /**
      * Guarda un nuevo evento en el sistema.
      *
@@ -32,19 +41,18 @@ class Evento
      * @param array $evento Datos del evento.
      * @return void
      */
-    public static function guardar($nombreEvento, $evento)
+    public static function guardar($nombre, $fecha, $descripcion, $asistencia)
     {
-        $fechaEvento = strtotime($evento['fecha']);
+        $fechaEvento = strtotime($fecha);
         $fechaActual = strtotime(date('Y-m-d'));
 
         if ($fechaEvento < $fechaActual) {
             echo "No se pueden añadir eventos con fechas pasadas.";
             return;
         }
-
-        $data = Usuario::obtenerTodos();
-        $data[$_SESSION['user']['nombreUsuario']]['eventos'][$nombreEvento] = $evento;
-        file_put_contents(__DIR__ . '/../data/usuarios.json', json_encode($data, JSON_PRETTY_PRINT));
+        
+        (new BDA)->añadirEventoPersonal($nombre, $fecha, $descripcion, $asistencia);
+       
     }
 
     /**
@@ -56,23 +64,13 @@ class Evento
      * @param string $nUsuario Nombre del usuario con quien se compartirá el evento.
      * @return void
      */
-    public static function compartir($nEvetno, $nUsuario)
+    public static function compartir($nombreEvento, $nombreUsuario)
     {
-        $data = Usuario::obtenerTodos();
-
-        if (isset($data[$_SESSION['user']['nombreUsuario']]['eventos'][$nEvetno])) {
-            if (isset($data[$nUsuario])) {
-                $data[$nUsuario]['eventos'][$nEvetno] = $data[$_SESSION['user']['nombreUsuario']]['eventos'][$nEvetno];
-                $data[$nUsuario]['eventos'][$nEvetno]['asistencia'] = false;
-
-                file_put_contents(__DIR__ . '/../data/usuarios.json', json_encode($data, JSON_PRETTY_PRINT));
-            } else {
-                echo "El usuario no existe.";
-            }
-        } else {
-            echo "El evento no existe.";
-        }
+        // Llamar a la función compartirEvento para manejar la lógica con la base de datos
+        (new BDA)->compartirEvento($nombreEvento, $nombreUsuario);
     }
+    
+    
 
     /**
      * Elimina un evento del usuario actual.
@@ -82,11 +80,7 @@ class Evento
      */
     public static function eliminar($nombre)
     {
-        $data = Usuario::obtenerTodos();
-        unset($data[$_SESSION['user']['nombreUsuario']]['eventos'][$nombre]);
-        file_put_contents(__DIR__ . '/../data/usuarios.json', json_encode($data, JSON_PRETTY_PRINT));
-        header('Location: index.php?accion=listar_eventos');
-        exit();
+        (new BDA)->eliminarEvento($nombre);
     }
 
     /**
@@ -97,9 +91,7 @@ class Evento
      */
     public static function asistir($nombre)
     {
-        $data = Usuario::obtenerTodos();
-        $data[$_SESSION['user']['nombreUsuario']]['eventos'][$nombre]['asistencia'] = true;
-        file_put_contents(__DIR__ . '/../data/usuarios.json', json_encode($data, JSON_PRETTY_PRINT));
+       (new BDA)->asistir($nombre);
         header('Location: index.php?accion=listar_eventos');
         exit();
     }
@@ -109,9 +101,9 @@ class Evento
      *
      * @return array Lista actualizada de eventos del usuario.
      */
-    public static function actualizarEventosUsuario()
+    public static function actualizarEventosUsuario($nombre)
     {
-        $data = Usuario::obtenerTodos();
+        $data = Usuario::obtenerUsuario($nombre);
         $fechaActual = strtotime(date('Y-m-d'));
         $usuario = $_SESSION['user']['nombreUsuario'];
 
@@ -126,13 +118,4 @@ class Evento
         return $data[$usuario]['eventos'];
     }
 
-    /**
-     * Obtiene los eventos generales disponibles.
-     *
-     * @return array Lista de eventos generales.
-     */
-    public static function obtenerEventosGenerales()
-    {
-        return json_decode(file_get_contents(__DIR__ . '/../data/eventos.json'), true);
-    }
 }

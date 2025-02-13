@@ -19,8 +19,8 @@ class EventoControlador
      */
     public function listar()
     {
-        $eventosUsuario = Evento::obtenerTodos();
-        $eventosGenerales = Evento::obtenerEventosGenerales();
+        $eventosUsuario = Evento::obtenerEventosPersonales();
+        $eventosGenerales = Evento::obtenerTodos();
 
         require_once __DIR__ . '/../vistas/evento/lista.php';
     }
@@ -37,14 +37,7 @@ class EventoControlador
     public function agregar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nuevoEvento = [
-                'nombre' => $_POST['nombre'],
-                'fecha' => $_POST['fecha'],
-                'descripcion' => $_POST['descripcion'],
-                'asistencia' => true
-            ];
-
-            Evento::guardar($_POST['nombre'], $nuevoEvento);
+            Evento::guardar($_POST['nombre'], $_POST['fecha'], $_POST['descripcion'], true);
         }
 
         require_once __DIR__ . '/../vistas/evento/agregar.php';

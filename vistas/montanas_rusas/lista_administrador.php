@@ -5,21 +5,6 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'administrador') {
     exit();
 }
 
-// Filtrar las montañas rusas generales por los parámetros recibidos en la URL
-$filtrar = $_GET;  // Parámetros de filtro desde la URL
-$montanasRusasGenerales = array_filter($montanasRusas, function ($montana) use ($filtrar) {
-    foreach ($filtrar as $clave => $valor) {
-        if (isset($montana[$clave])) {
-            if (is_numeric($valor)) {
-                // Si el filtro es numérico (altura, velocidad)
-                if ($montana[$clave] < (int)$valor) {
-                    return false;
-                }
-            }
-        }
-    }
-    return true; // Solo si todos los filtros se cumplen
-});
 ?>
 
 
