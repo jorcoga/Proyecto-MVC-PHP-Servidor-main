@@ -19,7 +19,7 @@
             <a href="index.php?accion=logout">Cerrar sesión</a>
         </div>
     </nav>
-    
+
     <!-- Tabla de Eventos del Usuario -->
     <h3>Eventos del Usuario</h3>
     <table id="tablaMontañas">
@@ -39,14 +39,20 @@
                         <td><?php echo htmlspecialchars($evento['nombre']); ?></td>
                         <td><?php echo htmlspecialchars($evento['fecha']); ?></td>
                         <td><?php echo htmlspecialchars($evento['descripcion']); ?></td>
-                        
+
+                        <!-- Vista: Eliminar evento -->
                         <?php if (!$evento['asistencia']) : ?>
                             <td><a href="index.php?accion=asistir&id=<?php echo $evento['idEvento']; ?>"><button>Asistiré</button></a></td>
-                            <td><a href="index.php?accion=eliminar&id=<?php echo $evento['idEvento']; ?>"><button>Eliminar</button></a></td>
+                            <td><a href="index.php?accion=eliminarEvento&id=<?php echo $evento['idEvento']; ?>">
+                                <button>Eliminar</button>
+                            </a></td>
                         <?php else: ?>
-                            <td colspan="2"><a href="index.php?accion=eliminar&id=<?php echo $evento['idEvento']; ?>"><button>Eliminar</button></a></td>
+                            <td colspan="2"><a href="index.php?accion=eliminarEvento&id=<?php echo $evento['idEvento']; ?>">
+                                    <button>Eliminar</button>
+                                </a></td>
                         <?php endif; ?>
-                           
+
+
                         <td>
                             <?php
                             $fechaEvento = strtotime($evento['fecha']);

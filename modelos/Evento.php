@@ -20,7 +20,7 @@ class Evento
      */
     public static function obtenerTodos()
     {
-         return (new BDA())->obtenerEventos();    
+        return (new BDA())->obtenerEventos();
     }
 
     /**
@@ -50,9 +50,8 @@ class Evento
             echo "No se pueden añadir eventos con fechas pasadas.";
             return;
         }
-        
+
         (new BDA)->añadirEventoPersonal($nombre, $fecha, $descripcion, $asistencia);
-       
     }
 
     /**
@@ -69,8 +68,8 @@ class Evento
         // Llamar a la función compartirEvento para manejar la lógica con la base de datos
         (new BDA)->compartirEvento($nombreEvento, $nombreUsuario);
     }
-    
-    
+
+
 
     /**
      * Elimina un evento del usuario actual.
@@ -78,9 +77,10 @@ class Evento
      * @param string $nombre Nombre del evento a eliminar.
      * @return void
      */
-    public static function eliminar($nombre)
+    // Evento.php
+    public static function eliminar($idEvento)
     {
-        (new BDA)->eliminarEvento($nombre);
+        (new BDA)->eliminarEvento($idEvento);
     }
 
     /**
@@ -91,7 +91,7 @@ class Evento
      */
     public static function asistir($nombre)
     {
-       (new BDA)->asistir($nombre);
+        (new BDA)->asistir($nombre);
         header('Location: index.php?accion=listar_eventos');
         exit();
     }
@@ -117,5 +117,4 @@ class Evento
 
         return $data[$usuario]['eventos'];
     }
-
 }

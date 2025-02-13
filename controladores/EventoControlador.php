@@ -70,7 +70,8 @@ class EventoControlador
      */
     public function asistir()
     {
-        Evento::asistir($_GET['nombre']);
+        // Llamar a la función asistir
+        Evento::asistir($_GET['id']);
     }
 
     /**
@@ -81,8 +82,17 @@ class EventoControlador
      *
      * @return void
      */
-    public function eliminar()
+    public function eliminarEvento()
     {
-        Evento::eliminar($_GET['nombre']);
+        // Verificar si se pasa el 'id' del evento en la URL
+        if (isset($_GET['id'])) {
+            $idEvento = $_GET['id']; // Obtenemos el idEvento desde la URL
+
+            // Llamamos al modelo para eliminar el evento
+            Evento::eliminar($idEvento);
+        } else {
+            // Si no se pasa el 'id', mostramos un error
+            echo "No se ha proporcionado un ID de evento.";
+        }
     }
 }

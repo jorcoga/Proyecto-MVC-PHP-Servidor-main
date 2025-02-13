@@ -332,25 +332,28 @@ VALUES
             echo "Error al eliminar la montaña rusa: " . $e->getMessage();
         }
     }
-    function asistir($nombreEvento)
-    {
-        try {
-            // Configurar la conexión a la base de datos
-            $pdo = (new BDA)->conexion();
+    function asistir($idEvento)
+{
+    
+    try {
+        // Configurar la conexión a la base de datos
+        $pdo = (new BDA)->conexion();
 
-            // Obtener el usuario y el evento
-            $idUsuario = $_SESSION['user']['idUsuario']; // Asegúrate de que la sesión tiene el ID del usuario
+        // Obtener el ID del usuario desde la sesión
+        $idUsuario = $_SESSION['user']['idUsuario']; // Asegúrate de que la sesión tiene el ID del usuario
 
+        // Consulta para actualizar la asistencia en la base de datos usando el idEvento
+        $sql = "UPDATE EventosPersonales SET asistencia = 1 WHERE idUsuario = ? AND idEvento = ?";
+        $stmt = $pdo->prepare($sql);
 
-            // Consulta para actualizar la asistencia en la base de datos
-            $sql = "UPDATE EventosPersonales SET asistencia = 1 WHERE idUsuario = ? AND nombre = ?";
-            $stmt = $pdo->prepare($sql);
-
-            $stmt->execute([$idUsuario, $nombreEvento]);
-        } catch (PDOException $e) {
-            die("Error al actualizar la asistencia: " . $e->getMessage());
-        }
+        // Ejecutar la consulta con el ID del usuario y el ID del evento
+        $stmt->execute([$idUsuario, $idEvento]);
+    } catch (PDOException $e) {
+        // Manejo de errores si ocurre algún problema con la base de datos
+        die("Error al actualizar la asistencia: " . $e->getMessage());
     }
+}
+
 
     function añadirEventoPersonal($nombreEvento, $fecha, $descripcion, $asistencia)
     {
@@ -368,7 +371,7 @@ VALUES
                 VALUES (:idUsuario, :nombre, :fecha, :descripcion, :asistencia)";
 
             $stmt = $pdo->prepare($sql);
-            print_r($_SESSION);
+     
             // Bind de parámetros con tipos correctos
             $stmt->bindValue(":idUsuario", $_SESSION['user']['idUsuario'], PDO::PARAM_INT);
             $stmt->bindValue(":nombre", $nombreEvento, PDO::PARAM_STR);
@@ -454,28 +457,31 @@ VALUES
         }
     }
 
-    public static function eliminarEvento($nombreEvento)
-{
-    try {
-        // Configurar la conexión a la base de datos
-        $pdo = (new BDA)->conexion();
+    public static function eliminarEvento($idEvento)
+    {
+        try {
+            // Conexión a la base de datos
+            $pdo = (new BDA)->conexion();
 
-        // Obtener el ID del usuario desde la sesión (suponiendo que el usuario está autenticado)
-        $idUsuario = $_SESSION['user']['idUsuario'];  // Verifica que esta clave esté disponible en la sesión
+            // Obtener el ID del usuario desde la sesión
+            $idUsuario = $_SESSION['user']['idUsuario'];  // Asegúrate de que esta clave esté en la sesión
 
-        // Consulta para eliminar el evento personal del usuario
-        $sql = "DELETE FROM EventosPersonales WHERE idUsuario = ? AND nombre = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(1, $idUsuario, PDO::PARAM_STR);
-        $stmt->bindParam(2, $nombreEvento, PDO::PARAM_STR);
+            // Consulta SQL para eliminar el evento
+            $sql = "DELETE FROM EventosPersonales WHERE idUsuario = ? AND idEvento = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(1, $idUsuario, PDO::PARAM_INT);
+            $stmt->bindParam(2, $idEvento, PDO::PARAM_INT);
+            header('Location: index.php?accion=listar_eventos');
+            // Ejecutar la consulta
+            $stmt->execute();
 
-        $stmt->execute();
-
-    } catch (PDOException $e) {
-        // Manejo de errores, si ocurre algún problema con la base de datos
-        die("Error al eliminar el evento: " . $e->getMessage());
+        } catch (PDOException $e) {
+            // Manejo de errores
+            die("Error al eliminar el evento: " . $e->getMessage());
+        }
     }
-}
+    
+
 }
 // CREATE TABLE IF NOT EXISTS Usuarios (
 //     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
