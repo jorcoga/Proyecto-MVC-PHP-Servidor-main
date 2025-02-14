@@ -483,26 +483,4 @@ VALUES
     
 
 }
-// CREATE TABLE IF NOT EXISTS Usuarios (
-//     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-//     nombreUsuario VARCHAR(100) UNIQUE NOT NULL,
-//     contrasena VARCHAR(255) NOT NULL,
-//     rol ENUM('administrador', 'usuario', 'fabricante') NOT NULL
-// );
 
-// CREATE TABLE IF NOT EXISTS EventosGenerales (
-//     idEvento INT AUTO_INCREMENT PRIMARY KEY,
-//     nombre VARCHAR(100) NOT NULL,
-//     fecha DATE NOT NULL,
-//     descripcion TEXT
-// );
-
-// CREATE TABLE IF NOT EXISTS EventosPersonales (
-//     idEvento INT AUTO_INCREMENT PRIMARY KEY,
-//     idUsuario INT NOT NULL,
-//     nombre VARCHAR(100) NOT NULL,
-//     fecha DATE NOT NULL,
-//     descripcion TEXT,
-//     asistencia BOOLEAN,
-//     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
-// );
