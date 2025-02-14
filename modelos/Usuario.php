@@ -14,10 +14,14 @@ class Usuario
      *
      * @return array Lista de todos los usuarios.
      */
-    public static function obtenerTodos()
+    public static function obtenerContraseña($nombre)
     {
-        $usuarios = json_decode(file_get_contents(__DIR__ . '/../data/usuarios.json'), true);
-        return $usuarios;
+        return (new BDA)->buscarContrasena($nombre);
+    }
+
+    public static function obtenerUsuario($nombre)
+    {
+        return (new BDA)->buscarUsuario($nombre);
     }
 
     /**
@@ -30,21 +34,7 @@ class Usuario
      */
     public static function guardar($nombre, $contrsena, $rol)
     {
-        $nuevoUsuario = [
-            'nombreUsuario' => $nombre,
-            'contrasena' => $contrsena,
-            'rol' => $rol,
-            'eventos' => []
-        ];
-
-        // Obtener los usuarios existentes
-        $usuarios = self::obtenerTodos();
-
-        // Añadir el nuevo usuario
-        $usuarios[$nombre] = $nuevoUsuario;
-
-        // Guardar los usuarios actualizados en el archivo JSON
-        file_put_contents(__DIR__ . '/../data/usuarios.json', json_encode($usuarios, JSON_PRETTY_PRINT));
+        (new BDA)->introducirUsuarios($nombre, $contrsena, $rol);
 
         // Redirigir al formulario de login
         header('Location: index.php?accion=login');
@@ -63,11 +53,12 @@ class Usuario
      */
     public static function verificar($nombre, $contrasena)
     {
-        $usuarios = self::obtenerTodos();
-
+       
+        $contrasenaComprobar = self::obtenerContraseña($nombre);    
+        print_r($contrasenaComprobar);
         // Verificar si el usuario existe y si la contraseña es correcta
-        if (isset($usuarios[$nombre]) && password_verify($contrasena, $usuarios[$nombre]['contrasena'])) {
-            $_SESSION['user'] = $usuarios[$nombre];
+        if (password_verify($contrasena, $contrasenaComprobar[0])) {
+            $_SESSION['user'] = self::obtenerUsuario($nombre);
             header('Location: index.php?accion=index');
             exit();
         }

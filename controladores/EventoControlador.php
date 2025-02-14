@@ -19,8 +19,8 @@ class EventoControlador
      */
     public function listar()
     {
-        $eventosUsuario = Evento::obtenerTodos();
-        $eventosGenerales = Evento::obtenerEventosGenerales();
+        $eventosUsuario = Evento::obtenerEventosPersonales();
+        $eventosGenerales = Evento::obtenerTodos();
 
         require_once __DIR__ . '/../vistas/evento/lista.php';
     }
@@ -37,14 +37,7 @@ class EventoControlador
     public function agregar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nuevoEvento = [
-                'nombre' => $_POST['nombre'],
-                'fecha' => $_POST['fecha'],
-                'descripcion' => $_POST['descripcion'],
-                'asistencia' => true
-            ];
-
-            Evento::guardar($_POST['nombre'], $nuevoEvento);
+            Evento::guardar($_POST['nombre'], $_POST['fecha'], $_POST['descripcion'], true);
         }
 
         require_once __DIR__ . '/../vistas/evento/agregar.php';
@@ -77,7 +70,8 @@ class EventoControlador
      */
     public function asistir()
     {
-        Evento::asistir($_GET['nombre']);
+        // Llamar a la función asistir
+        Evento::asistir($_GET['id']);
     }
 
     /**
@@ -88,8 +82,17 @@ class EventoControlador
      *
      * @return void
      */
-    public function eliminar()
+    public function eliminarEvento()
     {
-        Evento::eliminar($_GET['nombre']);
+        // Verificar si se pasa el 'id' del evento en la URL
+        if (isset($_GET['id'])) {
+            $idEvento = $_GET['id']; // Obtenemos el idEvento desde la URL
+
+            // Llamamos al modelo para eliminar el evento
+            Evento::eliminar($idEvento);
+        } else {
+            // Si no se pasa el 'id', mostramos un error
+            echo "No se ha proporcionado un ID de evento.";
+        }
     }
 }

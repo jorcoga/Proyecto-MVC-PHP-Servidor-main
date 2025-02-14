@@ -19,7 +19,7 @@
             <a href="index.php?accion=logout">Cerrar sesión</a>
         </div>
     </nav>
-    
+
     <!-- Tabla de Eventos del Usuario -->
     <h3>Eventos del Usuario</h3>
     <table id="tablaMontañas">
@@ -34,21 +34,25 @@
         </thead>
         <tbody>
             <?php if (!empty($eventosUsuario)): ?>
-                <?php foreach ($eventosUsuario as $eventos): ?>
-                    <?php if ($eventos["nombreUsuario"]==$_SESSION["user"]["nombreUsuario"]): ?>
-                    <?php foreach ($eventos['eventos'] as $evento): ?>
+                <?php foreach ($eventosUsuario as $evento): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($evento['nombre']); ?></td>
                         <td><?php echo htmlspecialchars($evento['fecha']); ?></td>
                         <td><?php echo htmlspecialchars($evento['descripcion']); ?></td>
-                        <?php if ($evento['asistencia'] === false) : ?>
-                            <td><a href="accion=asistir&nombre=<?php echo htmlspecialchars($evento['nombre']); ?>"><button>Asistiré</button></a></td>
-                            <td><a href="accion=eliminar&nombre=<?php echo htmlspecialchars($evento['nombre']); ?>"><button>Eliminar</button></a></td>
 
+                        <!-- Vista: Eliminar evento -->
+                        <?php if (!$evento['asistencia']) : ?>
+                            <td><a href="index.php?accion=asistir&id=<?php echo $evento['idEvento']; ?>"><button>Asistiré</button></a></td>
+                            <td><a href="index.php?accion=eliminarEvento&id=<?php echo $evento['idEvento']; ?>">
+                                <button>Eliminar</button>
+                            </a></td>
                         <?php else: ?>
-                            <td colspan="2"><a href="accion=eliminar&nombre=<?php echo htmlspecialchars($evento['nombre']); ?>"><button>Eliminar</button></a></td>
-                            <?php endif; ?>
-                           
+                            <td colspan="2"><a href="index.php?accion=eliminarEvento&id=<?php echo $evento['idEvento']; ?>">
+                                    <button>Eliminar</button>
+                                </a></td>
+                        <?php endif; ?>
+
+
                         <td>
                             <?php
                             $fechaEvento = strtotime($evento['fecha']);
@@ -65,8 +69,6 @@
                             ?>
                         </td>
                     </tr>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>

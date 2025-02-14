@@ -64,9 +64,9 @@ switch ($accion) {
         // Acción para validar una nueva montaña rusa
         (new MontañaRusaControlador())->validar();
         break;
-    case 'noAsistir':
+    case 'eliminarEvento':
         // Acción para eliminar una nueva montaña rusa
-        (new EventoControlador())->eliminar();
+        (new EventoControlador())->eliminarEvento();
         break;
     case 'asistir':
         // Acción para validar una nueva montaña rusa
